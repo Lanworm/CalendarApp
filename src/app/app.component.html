@@ -1,0 +1,26 @@
+<div class="nav">
+    <div class="container">
+        <button class='btn btn-primary' (click)='changeMonth(false)'> < </button>
+{{nowMonthName}}
+        <button class='btn btn-primary' (click)='changeMonth(true)'> > </button>
+    </div>
+</div>
+<div class="container cal-body">
+    <table class="table table-bordered">
+        <tbody>
+        <tr *ngFor='let week of calendar; let i = index'>
+            <td class="cal-cell" *ngFor='let day of week'
+                [ngClass]="{'cal-event': day.dayEvent, 'cal-now': day.date=== nowDate, 'cal-notIn': validateDateMonth(day.date)===false }">
+                <div><span *ngIf="i===0"> {{day.dayName}} </span> {{day.num}}
+                    <span *ngIf='day.dayEvent'>
+                        <br>
+                      <strong>{{day.dayEvent.eventTitle}}</strong>
+                        <br>
+                        {{day.dayEvent.members}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

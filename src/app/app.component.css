@@ -1,0 +1,30 @@
+.cal-body {
+    padding-top: 15px;
+}
+
+.cal-cell {
+    height: 146px;
+    word-wrap: break-word;
+    width: 14.285714285714285714285714285714%;
+}
+.cal-body tbody td:hover {
+    background: #E5F1F9;
+    outline: 2px solid #B2D5F1;
+   }
+
+.cal-event{
+    background: #E5F1F9;
+}
+
+.cal-now{
+    background: ghostwhite;
+    font-style: inherit;
+}
+.cal-notIn{
+    background: #F4F4F4;
+    font-style: inherit;
+}
+.nav {
+    min-height: 100px;
+    background: #F4F4F4;
+}
