@@ -1,15 +1,28 @@
 <div class="nav">
-    <div class="container">
-        <button class='btn btn-primary' (click)='changeMonth(false)'> < </button>
-{{nowMonthName}}
-        <button class='btn btn-primary' (click)='changeMonth(true)'> > </button>
+    <div class="container s-panel">
+        <button class="button-def"> Добавить</button>
+        <button class="button-def"> Обновить</button>
+        <input class="input-def" type="text" placeholder="Событие, дата или участник" size="40" [(ngModel)]='eventList'>
+        <div style="position: absolute; right: 150px">
+            <div *ngFor='let event of events | eventFilter:eventList' >
+                {{event.eventTitle}}
+            </div>
+        </div>
     </div>
+
 </div>
 <div class="container cal-body">
+    <div class="data-selctor">
+        <button class="button-def" (click)='changeMonth(false)'> &#9668; </button>
+        <strong>{{nowMonthName}}</strong>
+        <button class="button-def" (click)='changeMonth(true)'> &#9658; </button>
+        <button class="button-def" (click)='setNow()'> Сегодня</button>
+    </div>
+
     <table class="table table-bordered">
         <tbody>
         <tr *ngFor='let week of calendar; let i = index'>
-            <td class="cal-cell" *ngFor='let day of week'
+            <td class="cal-cell" (click)="onDaySelected(day)" *ngFor='let day of week'
                 [ngClass]="{'cal-event': day.dayEvent, 'cal-now': day.date=== nowDate, 'cal-notIn': validateDateMonth(day.date)===false }">
                 <div><span *ngIf="i===0"> {{day.dayName}} </span> {{day.num}}
                     <span *ngIf='day.dayEvent'>
@@ -23,4 +36,34 @@
         </tr>
         </tbody>
     </table>
+
+    <app-dialog [(visible)]="showDialog" style="background: red">
+        <div *ngIf="!selectedEvent">
+            <input class="input-event" type="text" placeholder="Событие" #event>
+            <input class="input-event" type="text" placeholder="Имена участников" #members>
+            <textarea class="area-event" rows="8" placeholder="Описание" #eventDescription></textarea>
+            <button class="button-def" (click)="onAddEvent({
+            eventTitle: event.value,
+            date: selectedItem.date,
+            members: members.value,
+            description: eventDescription.value,
+            id:selectedItem.date})">Сохранить
+            </button>
+            <button (click)="showDialog = !showDialog" class="button-def">Отмена</button>
+        </div>
+        <div *ngIf="selectedEvent">
+            <h4>{{selectedEvent.eventTitle}}</h4>
+            Участники: {{selectedEvent.members}}
+            <textarea class="area-event" rows="8" placeholder="Описание" #editDescription
+                      [value]="selectedEvent.description"></textarea>
+            <button class="button-def" (click)="onEventChange({
+            eventTitle: selectedEvent.eventTitle,
+            date: selectedEvent.date,
+            members: selectedEvent.members,
+            description: editDescription.value,
+            id:selectedItem.date})">Изменить
+            </button>
+            <button (click)="onDeleteEvent(selectedEvent)" class="button-def">Удалить</button>
+        </div>
+    </app-dialog>
 </div>
