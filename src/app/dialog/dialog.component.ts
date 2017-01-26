@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter, trigger, style, animate
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css'],
+  styleUrls: ['./dialog.component.scss'],
   animations: [
     trigger('dialog', [
       transition('void => *', [

@@ -6,16 +6,13 @@ import * as moment from 'moment';
 import now = moment.now;
 import {IEvent} from "./event";
 import {IdayInfo} from "./dayInfo";
-
-
-
+import {EventService} from "./app.service";
 
 
 @Component({
     selector: 'my-app',
-    encapsulation: ViewEncapsulation.None,
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
     now: any = moment().locale('ru');
@@ -30,7 +27,10 @@ export class AppComponent implements OnInit {
     selectedItem: IdayInfo;
     selectedEvent: IEvent;
     ls: any = localStorage;
-    eventList: string='';
+    eventList: string = '';
+
+    constructor(private _eventService: EventService) {
+    }
 
     changeMonth(change: boolean): void {
         change ? this.now.add(1, "M") : this.now.subtract(1, "M");
@@ -75,8 +75,11 @@ export class AppComponent implements OnInit {
             this.events = JSON.parse(this.ls.getItem('eventsLs'))
         }
         this.initCalendar();
-        console.log(this.ls.getItem('eventsLs'))
-        console.log(this.eventList)
+        console.log(this.ls.getItem('eventsLs'));
+        console.log(this.eventList);
+        this._eventService.getEvents().then(
+            heroes => console.log(heroes),
+            error => console.log(error));
     }
 
     onDaySelected(_selectedDay: any): void {
@@ -88,8 +91,6 @@ export class AppComponent implements OnInit {
             this.selectedEvent = null
         }
         this.showDialog = true;
-        console.log(this.selectedEvent);
-        console.log(this.selectedItem)
     }
 
     onAddEvent(_event: IEvent) {
@@ -114,4 +115,8 @@ export class AppComponent implements OnInit {
         this.ls.setItem('eventsLs', JSON.stringify(this.events));
     }
 
+    onFindEventSelect(_eventDate: string) {
+        this.now = moment(_eventDate, 'YYYY-MM-DD').locale('ru');
+        this.initCalendar()
+    }
 }

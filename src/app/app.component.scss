@@ -74,15 +74,15 @@
 }
 
 .dialogFilter {
-  z-index: 1000;
-  position: fixed;
-  right: 100px;
-  top: 100px;
-  width: 90%;
-  max-width: 200px;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+    background: ghostwhite;
+    padding: 2px 4px;
+    font-size: 12px;
+    border-radius: 3px;
+    border: 0.5px solid #2d2d2d;
+    margin: 5px;
+     &:hover {
+      background-color: #B2D5F1;
+    }
 }
 
 .input-event{

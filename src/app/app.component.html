@@ -3,9 +3,12 @@
         <button class="button-def"> Добавить</button>
         <button class="button-def"> Обновить</button>
         <input class="input-def" type="text" placeholder="Событие, дата или участник" size="40" [(ngModel)]='eventList'>
-        <div style="position: absolute; right: 150px">
-            <div *ngFor='let event of events | eventFilter:eventList' >
-                {{event.eventTitle}}
+        <div style="position: absolute; right: 20%; width: 274px;">
+            <div *ngFor='let eevent of events | eventFilter:eventList' (click)="onFindEventSelect(eevent.date)">
+                <div class="dialogFilter" >
+                    <h5>{{eevent.eventTitle}}</h5>
+                    <p>{{eevent.members}}</p>
+                </div>
             </div>
         </div>
     </div>
