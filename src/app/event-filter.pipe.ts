@@ -10,9 +10,9 @@ import {IEvent} from "./event";
 export class EventFilterPipe implements PipeTransform {
 
     transform(value: IEvent[], filterBy: string): IEvent[] {
-        filterBy = filterBy ? filterBy.toLocaleLowerCase() : null;
+        filterBy = filterBy!=' ' ? filterBy.toLocaleLowerCase() : null;
         return filterBy ? value.filter((event: IEvent) =>
-            event.eventTitle.toLocaleLowerCase().indexOf(filterBy) !== -1) : [];
+            event.eventTitle.toLocaleLowerCase().indexOf(filterBy) !== -1  ) : [];
     }
 }
 

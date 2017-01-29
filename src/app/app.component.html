@@ -2,12 +2,15 @@
     <div class="container s-panel">
         <button class="button-def"> Добавить</button>
         <button class="button-def"> Обновить</button>
-        <input class="input-def" type="text" placeholder="Событие, дата или участник" size="40" [(ngModel)]='eventList'>
-        <div style="position: absolute; right: 20%; width: 274px;">
-            <div *ngFor='let eevent of events | eventFilter:eventList' (click)="onFindEventSelect(eevent.date)">
-                <div class="dialogFilter" >
-                    <h5>{{eevent.eventTitle}}</h5>
-                    <p>{{eevent.members}}</p>
+        <div class="input-def">
+            <input  type="text" placeholder="Событие, дата или участник" size="40"
+                    [(ngModel)]='eventList'>
+            <div class="uparrowdiv" *ngIf="(events | eventFilter:eventList).length != 0">
+                <div *ngFor='let eevent of events | eventFilter:eventList' (click)="onFindEventSelect(eevent.date)">
+                    <div class="dialogFilter">
+                        <h5>{{eevent.eventTitle}}</h5>
+                        <p>{{eevent.members}}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -15,7 +18,7 @@
 
 </div>
 <div class="container cal-body">
-    <div class="data-selctor">
+    <div class="dateSelector">
         <button class="button-def" (click)='changeMonth(false)'> &#9668; </button>
         <strong>{{nowMonthName}}</strong>
         <button class="button-def" (click)='changeMonth(true)'> &#9658; </button>

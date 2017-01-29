@@ -1,98 +1,175 @@
+$shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Параметры тени */
+
 .cal-cell {
-    height: 146px;
-    word-wrap: break-word;
-    width: 14.285714285714285714285714285714%;
+  height: 146px;
+  word-wrap: break-word;
+  width: 14.285714285714285714285714285714%;
 }
 
 .cal-body {
 }
 
 .cal-body tbody td:hover {
-    background: #E5F1F9;
-    outline: 2px solid #B2D5F1;
+  background: #E5F1F9;
+  outline: 2px solid #B2D5F1;
 }
 
 .cal-event {
-    background: #E5F1F9;
+  background: #E5F1F9;
 }
 
 .cal-now {
-    background: ghostwhite;
-    font-style: inherit;
+  background: ghostwhite;
+  font-style: inherit;
 }
 
 .cal-notIn {
-    background: #F4F4F4;
-    font-style: inherit;
+  background: #F4F4F4;
+  font-style: inherit;
 }
 
 .nav {
-    min-height: 100px;
-    background: #F4F4F4;
+  min-height: 100px;
+  background: #F4F4F4;
 }
 
 .s-panel {
-    padding-top: 65px;
-    background: #F4F4F4;
-}
-
-.data-selctor {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-size: 15px;
+  padding-top: 65px;
+  background: #F4F4F4;
 }
 
 .button-def {
-    border: none;
-    padding: 2px 5px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    border-radius: 3px;
+  border: none;
+  padding: 2px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 3px;
 }
 
 .input-def {
+
+  display: inline-block;
+  float: right;
+  clear: both;
+
+  input {
     border: none;
     padding: 2px 4px;
     text-decoration: none;
-    display: inline-block;
     font-size: 12px;
     border-radius: 3px;
-    float: right;
-    clear: both;
+  }
 }
 
 .area-event {
-    width: 100%;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    overflow: auto;
-    font-size: 12px;
-    padding: 2px 4px;
-    border-radius: 3px;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  overflow: auto;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 3px;
 }
 
 .dialogFilter {
-    background: ghostwhite;
-    padding: 2px 4px;
-    font-size: 12px;
-    border-radius: 3px;
-    border: 0.5px solid #2d2d2d;
-    margin: 5px;
-     &:hover {
-      background-color: #B2D5F1;
-    }
+
+  min-width: 250px;
+  padding: 2px 4px;
+  font-size: 12px;
+  margin: 5px;
+  &:hover {
+    background-color: #27A1FF;
+    color: white;
+  }
+  &:after {
+    content: ' ';
+    display: block;
+    border: 0.25px solid #F9F9F9;
+  }
 }
 
-.input-event{
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 2px 4px;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    border-radius: 3px;
-    float: right;
-    clear: both;
+.input-event {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 2px 4px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 3px;
+  float: right;
+  clear: both;
+}
+
+.uparrowdiv, .downarrowdiv, .leftarrowdiv, .rightarrowdiv {
+  box-shadow: $shadow;
+  min-height: 40px; /*минимальная высота DIV, не менее две ширины стрелки*/
+  background: white;
+  padding: 5px;
+  position: absolute;
+  word-wrap: break-word;
+  -moz-border-radius: 5px; /*Огругляем углы при помощи CSS3*/
+  -webkit-border-radius: 5px;
+  border-radius: 3px;
+  margin-bottom: 2em;
+  margin-top: 10px;
+}
+
+.uparrowdiv:after { /*Добавление стрелки к uparrowdiv DIV*/
+  content: '';
+  display: block;
+  position: absolute;
+  top: -20px; /*должно быть -border-width x 2 */
+  left: 30px;
+  width: 0;
+  height: 0;
+  border-color: transparent transparent white transparent; /*цвет границы должен быть тем же самым как цвет фона div*/
+  border-style: solid;
+  border-width: 10px;
+}
+
+
+.downarrowdiv:after { /*Добавление стрелки к downarrowdiv DIV*/
+  content: '';
+  display: block;
+  position: absolute;
+  top: 100%; /*Установить 100% */
+  left: 30px;
+  width: 0;
+  height: 0;
+  border-color: black transparent transparent transparent; /*цвет границы должен быть тем же самым как цвет фона div*/
+  border-style: solid;
+  border-width: 10px;
+}
+
+.leftarrowdiv:after { /*Добавление стрелки leftarrowdiv DIV*/
+  content: '';
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: -20px; /*должно быть -border-width x 2 */
+  width: 0;
+  height: 0;
+  border-color: transparent black transparent transparent; /*цвет границы должен быть тем же самым как цвет фона div*/
+  border-style: solid;
+  border-width: 10px;
+}
+
+.rightarrowdiv:after { /*Добавление стрелки rightarrowdiv DIV*/
+  content: '';
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 100%; /*Установить 100% */
+  width: 0;
+  height: 0;
+  border-color: transparent transparent transparent black; /*цвет границы должен быть тем же самым как цвет фона div*/
+  border-style: solid;
+  border-width: 10px;
+}
+
+.dateSelector {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }

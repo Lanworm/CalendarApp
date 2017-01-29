@@ -1,13 +1,13 @@
 /**
  * Created by anton.goloschapov on 06.01.2017.
  */
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import now = moment.now;
 import {IEvent} from "./event";
 import {IdayInfo} from "./dayInfo";
 import {EventService} from "./app.service";
-
+import * as _ from 'lodash';
 
 @Component({
     selector: 'my-app',
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     }
 
     initCalendar(): void {
-        this.nowMonthName = this.now.format('MMMM YYYY');
+        this.nowMonthName = _.capitalize(this.now.format('MMMM YYYY'));
         let nowCopy: any = moment(this.now);
         this.calendar = [];
         let weekNumber: number = nowCopy.startOf('month').week();
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
                     date: nowCopy.week(i + weekNumber).weekday(j).format('YYYY-MM-DD'),
                     num: nowCopy.week(i + weekNumber).weekday(j).format('D'),
                     dayEvent: this.event,
-                    dayName: nowCopy.week(i + weekNumber).weekday(j).format('dddd')
+                    dayName: _.capitalize(nowCopy.week(i + weekNumber).weekday(j).format('dddd'))
                 };
                 this.day.dayEvent = this.events.find(event => event.date === this.day.date);
                 this.weekInfo.push(this.day);
@@ -101,14 +101,14 @@ export class AppComponent implements OnInit {
     }
 
     onDeleteEvent(_event: IEvent) {
-        this.events.splice(this.events.indexOf(_event), 1);
+        _.reject(this.events,_event);
         this.initCalendar();
         this.showDialog = false;
         this.ls.setItem('eventsLs', JSON.stringify(this.events));
     }
 
     onEventChange(_event: IEvent) {
-        this.events.splice(this.events.indexOf(this.selectedEvent), 1);
+        _.reject(this.events,_event);
         this.events.push(_event);
         this.initCalendar();
         this.showDialog = false;
@@ -117,6 +117,7 @@ export class AppComponent implements OnInit {
 
     onFindEventSelect(_eventDate: string) {
         this.now = moment(_eventDate, 'YYYY-MM-DD').locale('ru');
+        this.eventList='';
         this.initCalendar()
     }
 }
