@@ -21,6 +21,9 @@ import { Component, OnInit, Input, Output, EventEmitter, trigger, style, animate
 })
 export class DialogComponent implements OnInit {
   @Input() closable = true;
+  @Input() top: number;
+  @Input() left: number;
+  @Input() dialogState:boolean;
   @Input() visible: boolean;
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

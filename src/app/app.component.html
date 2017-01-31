@@ -1,17 +1,18 @@
 <div class="nav">
     <div class="container s-panel">
         <button class="button-def"> Добавить</button>
-        <button class="button-def"> Обновить</button>
+        <button class="button-def" (click)="updateEvent()"> Обновить</button>
         <div class="input-def">
-            <input  type="text" placeholder="Событие, дата или участник" size="40"
-                    [(ngModel)]='eventList'>
+            <input type="text" placeholder="Событие, дата или участник" size="40"
+                   [(ngModel)]='eventList'>
             <div class="uparrowdiv" *ngIf="(events | eventFilter:eventList).length != 0">
-                <div *ngFor='let eevent of events | eventFilter:eventList' (click)="onFindEventSelect(eevent.date)">
+                <div *ngFor='let eevent of events | eventFilter:eventList' (click)="onFindEventSelect(eevent.date)" style="z-index: 3">
                     <div class="dialogFilter">
                         <h5>{{eevent.eventTitle}}</h5>
                         <p>{{eevent.members}}</p>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -28,7 +29,7 @@
     <table class="table table-bordered">
         <tbody>
         <tr *ngFor='let week of calendar; let i = index'>
-            <td class="cal-cell" (click)="onDaySelected(day)" *ngFor='let day of week'
+            <td class="cal-cell" (click)="onDaySelected(day,calendarCell)" *ngFor='let day of week ' #calendarCell
                 [ngClass]="{'cal-event': day.dayEvent, 'cal-now': day.date=== nowDate, 'cal-notIn': validateDateMonth(day.date)===false }">
                 <div><span *ngIf="i===0"> {{day.dayName}} </span> {{day.num}}
                     <span *ngIf='day.dayEvent'>
@@ -43,7 +44,7 @@
         </tbody>
     </table>
 
-    <app-dialog [(visible)]="showDialog" style="background: red">
+    <app-dialog [(visible)]="showDialog" [(left)]="left" [(top)]="top" [(dialogState)]="dialogState">
         <div *ngIf="!selectedEvent">
             <input class="input-event" type="text" placeholder="Событие" #event>
             <input class="input-event" type="text" placeholder="Имена участников" #members>
@@ -72,4 +73,5 @@
             <button (click)="onDeleteEvent(selectedEvent)" class="button-def">Удалить</button>
         </div>
     </app-dialog>
+    <div class="overlay" (click)="onOverlayClick()" *ngIf="eventList.length != 0"></div>
 </div>

@@ -1,4 +1,4 @@
-<div [@dialog] *ngIf="visible" class="dialog" >
+<div [@dialog] *ngIf="visible" [style.left.px]="left" [style.top.px]="top" [ngClass]="{'rightarrowdiv': dialogState, 'leftarrowdiv':!dialogState }">
 
     <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn"> &#10008; </button>
 

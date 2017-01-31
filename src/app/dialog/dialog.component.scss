@@ -1,0 +1,64 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.leftarrowdiv, .rightarrowdiv{
+  z-index: 1000;
+  position: absolute;
+  margin-right: auto;
+  margin-left: auto;
+  width: 90%;
+  max-width: 350px;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+}
+
+.leftarrowdiv:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: -20px;
+  width: 0;
+  height: 0;
+  border-color: transparent white transparent transparent;
+  border-style: solid;
+  border-width: 10px;
+}
+
+.rightarrowdiv:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 100%;
+  width: 0;
+  height: 0;
+  border-color: transparent transparent transparent white; /*цвет границы должен быть тем же самым как цвет фона div*/
+  border-style: solid;
+  border-width: 10px;
+}
+
+@media (min-width: 768px) {
+  .dialog {
+    top: 40px;
+  }
+}
+
+.dialog__close-btn {
+  border: 0;
+  background: none;
+  color: #2d2d2d;
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 0.8em;
+}
+

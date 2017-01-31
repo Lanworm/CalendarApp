@@ -28,6 +28,9 @@ export class AppComponent implements OnInit {
     selectedEvent: IEvent;
     ls: any = localStorage;
     eventList: string = '';
+    left:number;
+    top: number;
+    dialogState:boolean;
 
     constructor(private _eventService: EventService) {
     }
@@ -75,14 +78,10 @@ export class AppComponent implements OnInit {
             this.events = JSON.parse(this.ls.getItem('eventsLs'))
         }
         this.initCalendar();
-        console.log(this.ls.getItem('eventsLs'));
-        console.log(this.eventList);
-        this._eventService.getEvents().then(
-            heroes => console.log(heroes),
-            error => console.log(error));
+
     }
 
-    onDaySelected(_selectedDay: any): void {
+    onDaySelected(_selectedDay: any, _object:any): void {
         this.selectedItem = _selectedDay;
         if (_selectedDay.dayEvent) {
             this.selectedEvent = _selectedDay.dayEvent
@@ -91,6 +90,17 @@ export class AppComponent implements OnInit {
             this.selectedEvent = null
         }
         this.showDialog = true;
+        if (_object.getBoundingClientRect().left>(window.innerWidth/2)){
+            console.log(_object.getBoundingClientRect().left);
+            this.left=_object.getBoundingClientRect().left-360;
+            this.dialogState=true
+        }
+        else {
+            this.left=_object.getBoundingClientRect().left+(_object.getBoundingClientRect().right-_object.getBoundingClientRect().left)+10;
+            this.dialogState=false
+        }
+        this.top=_object.getBoundingClientRect().top+10;
+        console.log(window.innerWidth)
     }
 
     onAddEvent(_event: IEvent) {
@@ -101,23 +111,38 @@ export class AppComponent implements OnInit {
     }
 
     onDeleteEvent(_event: IEvent) {
-        _.reject(this.events,_event);
+        this.events.splice(this.events.indexOf(_event), 1);
         this.initCalendar();
         this.showDialog = false;
         this.ls.setItem('eventsLs', JSON.stringify(this.events));
+        console.log(this.events)
     }
 
     onEventChange(_event: IEvent) {
-        _.reject(this.events,_event);
+        this.events.splice(this.events.indexOf(this.selectedEvent), 1);
         this.events.push(_event);
         this.initCalendar();
         this.showDialog = false;
         this.ls.setItem('eventsLs', JSON.stringify(this.events));
+        console.log(this.events)
     }
 
     onFindEventSelect(_eventDate: string) {
         this.now = moment(_eventDate, 'YYYY-MM-DD').locale('ru');
-        this.eventList='';
+        this.eventList = '';
         this.initCalendar()
+    }
+
+    onOverlayClick() {
+        this.eventList = ''
+    }
+
+    updateEvent() {
+        this._eventService.getEvents().then(
+            events => {
+                this.events = events;
+                this.initCalendar()
+            },
+            error => console.log(error));
     }
 }
