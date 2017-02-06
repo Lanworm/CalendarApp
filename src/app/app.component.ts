@@ -78,7 +78,6 @@ export class AppComponent implements OnInit {
             this.events = JSON.parse(this.ls.getItem('eventsLs'))
         }
         this.initCalendar();
-
     }
 
     onDaySelected(_selectedDay: any, _object:any): void {

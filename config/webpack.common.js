@@ -11,7 +11,17 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['', '.ts', '.js']
+
+      /*
+       * An array of extensions that should be used to resolve modules.
+       *
+       * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
+       */
+      extensions: ['.ts', '.js', '.json'],
+
+      // An array of directory names to be resolved to the current directory
+      modules: [helpers.root('src'), helpers.root('node_modules')],
+
     },
 
     module: {
@@ -22,17 +32,17 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                loader: 'html'
+                loader: 'html-loader'
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-                loader: 'file?name=assets/[name].[hash].[ext]'
+                loader: 'file-loader?name=assets/[name].[hash].[ext]'
             },
 
             {
                 test: /\.css$/,
                 exclude: helpers.root('src', 'app'),
-                loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
+                loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
             },
 
             {
