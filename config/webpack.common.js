@@ -25,6 +25,7 @@ module.exports = {
     },
 
     module: {
+        exprContextCritical: false,
         loaders: [
             {
                 test: /\.ts$/,

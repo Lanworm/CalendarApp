@@ -8,6 +8,7 @@ import {IEvent} from "./event";
 import {IdayInfo} from "./dayInfo";
 import {EventService} from "./app.service";
 import * as _ from 'lodash';
+import {Response} from "@angular/http";
 
 @Component({
     selector: 'my-app',
@@ -28,9 +29,9 @@ export class AppComponent implements OnInit {
     selectedEvent: IEvent;
     ls: any = localStorage;
     eventList: string = '';
-    left:number;
+    left: number;
     top: number;
-    dialogState:boolean;
+    dialogState: boolean;
 
     constructor(private _eventService: EventService) {
     }
@@ -80,7 +81,7 @@ export class AppComponent implements OnInit {
         this.initCalendar();
     }
 
-    onDaySelected(_selectedDay: any, _object:any): void {
+    onDaySelected(_selectedDay: any, _object: any): void {
         this.selectedItem = _selectedDay;
         if (_selectedDay.dayEvent) {
             this.selectedEvent = _selectedDay.dayEvent
@@ -89,17 +90,16 @@ export class AppComponent implements OnInit {
             this.selectedEvent = null
         }
         this.showDialog = true;
-        if (_object.getBoundingClientRect().left>(window.innerWidth/2)){
-            console.log(_object.getBoundingClientRect().left);
-            this.left=_object.getBoundingClientRect().left-360;
-            this.dialogState=true
+        //отрисовка окна
+        if (_object.getBoundingClientRect().left > (window.innerWidth / 2)) {
+            this.left = _object.getBoundingClientRect().left - 360;
+            this.dialogState = true
         }
         else {
-            this.left=_object.getBoundingClientRect().left+(_object.getBoundingClientRect().right-_object.getBoundingClientRect().left)+10;
-            this.dialogState=false
+            this.left = _object.getBoundingClientRect().left + (_object.getBoundingClientRect().right - _object.getBoundingClientRect().left) + 10;
+            this.dialogState = false
         }
-        this.top=_object.getBoundingClientRect().top+10;
-        console.log(window.innerWidth)
+        this.top = _object.getBoundingClientRect().top + 10;
     }
 
     onAddEvent(_event: IEvent) {
@@ -137,11 +137,13 @@ export class AppComponent implements OnInit {
     }
 
     updateEvent() {
-        this._eventService.getEvents().then(
-            events => {
-                this.events = events;
-                this.initCalendar()
-            },
-            error => console.log(error));
+        this._eventService.getEvents()
+            .then((response: Response) => <IEvent[]> response.json())
+            .then(
+                events => {
+                    this.events = events;
+                    this.initCalendar()
+                },
+                error => console.log(error));
     }
 }

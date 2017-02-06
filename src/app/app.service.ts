@@ -7,7 +7,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import {IEvent} from "./event";
+
 
 @Injectable()
 export class EventService {
@@ -18,10 +18,9 @@ export class EventService {
     }
 
 
-    getEvents(): Promise<IEvent[]> {
+    getEvents(): Promise<any> {
         return this._http.post(this._Url,'')
             .toPromise()
-            .then((response: Response) =><IEvent[]> response.json())
             .catch(this.handleError)
     }
 
