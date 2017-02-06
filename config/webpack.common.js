@@ -11,17 +11,8 @@ module.exports = {
     },
 
     resolve: {
-
-      /*
-       * An array of extensions that should be used to resolve modules.
-       *
-       * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
-       */
       extensions: ['.ts', '.js', '.json'],
-
-      // An array of directory names to be resolved to the current directory
-      modules: [helpers.root('src'), helpers.root('node_modules')],
-
+      modules: [helpers.root('src'), helpers.root('node_modules')]
     },
 
     module: {
